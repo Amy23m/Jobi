@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOBI</title>
+    <!-- Link to your external stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <!-- ADDED: Library to convert Markdown to HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-window">
+            <header class="welcome-message">
+                <h1>Welcome to Jobi</h1>
+                <button class="close-btn" onclick="minimizeChat()">&times;</button>
+            </header>
+            <main id="chat-message" class="chat-message">
+                <!-- Chat messages and status will be dynamically inserted here -->
+            </main>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Connecting to server..." maxlength="500" disabled>
+                <button class="send-btn" id="sendBtn" disabled>SEND</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to your external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
