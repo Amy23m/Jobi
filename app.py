@@ -15,10 +15,10 @@ CORS(app)
 
 # --- Google Gemini API Configuration ---
 try:
-    # Get the API key from environment variables
-    api_key = os.getenv("API_KEY")
+    # Get the API key from environment variables - FIXED to match render.yaml
+    api_key = os.getenv("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_API_KEY_HERE":
-        raise ValueError("API_KEY not found or is a placeholder in .env file")
+        raise ValueError("GEMINI_API_KEY not found or is a placeholder in .env file")
     
     genai.configure(api_key=api_key)
     
