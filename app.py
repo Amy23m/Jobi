@@ -1,21 +1,20 @@
 # app.py
 import os
 import google.generativeai as genai
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory, render_template_string
 from flask_cors import CORS
 from dotenv import load_dotenv
 
 # Load environment variables from a .env file
-# This will now correctly find the .env file you renamed.
 load_dotenv()
 
 # --- Flask App Initialization ---
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)
 
 # --- Google Gemini API Configuration ---
 try:
-    # Get the API key from environment variables - FIXED to match render.yaml
+    # Get the API key from environment variables
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key or api_key == "YOUR_API_KEY_HERE":
         raise ValueError("GEMINI_API_KEY not found or is a placeholder in .env file")
@@ -29,6 +28,20 @@ try:
 except Exception as e:
     print(f"Error configuring Gemini API: {e}")
     model = None
+
+# --- Serve the main HTML page ---
+@app.route('/')
+def index():
+    try:
+        with open('index.html', 'r') as f:
+            return f.read()
+    except FileNotFoundError:
+        return "index.html not found", 404
+
+# --- Serve static files ---
+@app.route('/<path:filename>')
+def static_files(filename):
+    return send_from_directory('.', filename)
 
 # --- API Route for Chatting ---
 @app.route('/chat', methods=['POST'])
@@ -54,11 +67,10 @@ def chat():
         return jsonify({"error": "Failed to get response from AI"}), 500
 
 # --- Health Check Route ---
-@app.route('/', methods=['GET'])
+@app.route('/health', methods=['GET'])
 def health_check():
     return "Flask server is running!"
 
 # --- Main Execution Block ---
 if __name__ == '__main__':
-    # Using port 5001 to avoid conflicts with other services.
     app.run(host='0.0.0.0', port=5001, debug=True)
