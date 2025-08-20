@@ -1,8 +1,10 @@
- // --- DOM Element References ---
+// --- DOM Element References ---
 const chatInput = document.getElementById('chatInput');
 const sendBtn = document.getElementById('sendBtn');
 const chatMessageContainer = document.getElementById('chat-message');
-const BACKEND_URL = 'http://127.0.0.1:5001';
+
+// UPDATED: Use relative URL for production deployment
+const BACKEND_URL = window.location.origin;
 
 // --- Initialize Markdown Converter ---
 const converter = new showdown.Converter();
